@@ -5,17 +5,16 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
-import lima.agenda.DAO.AgendaArquivoDAO;
 import lima.agenda.DAO.AgendaDAO;
+import lima.agenda.DAO.AgendaDAOFactory;
 import lima.agenda.exceptions.AgendaModelException;
 
 public class Agenda {
 	
-	private static AgendaDAO agendaDAO = new AgendaArquivoDAO();
+	private static AgendaDAO agendaDAO = AgendaDAOFactory.getInstance();
 	private static Agenda instance = null;
 	
 	private Map<Character, List<Contato>> contatos;
@@ -24,14 +23,6 @@ public class Agenda {
 		super();
 		this.contatos = new TreeMap<>();
 		this.carregarMap();
-		Set<Map.Entry<Character, List<Contato>>> set =  this.contatos.entrySet();
-		for (Map.Entry<Character, List<Contato>> entry : set) {
-			System.out.print(entry.getKey() + "-> ");
-			List<Contato> l = entry.getValue();
-			for (Contato c : l) {
-				System.out.println(c);
-			}
-		}
 	}
 	
 	public static Agenda getAgenda() throws AgendaModelException {
