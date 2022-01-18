@@ -26,6 +26,14 @@ public class AgendaArquivoDAO implements AgendaDAO {
 
 	@Override
 	public boolean salvarContatos(List<Contato> contatos) throws AgendaModelException {
+		if (Files.exists(AgendaArquivoDAO.DIRECTORY) == false) {
+			try {
+				Files.createDirectory(AgendaArquivoDAO.DIRECTORY);
+			} catch (IOException e) {
+				throw new AgendaModelException(
+					"Falha ao criar diretório", e);
+			}
+		}
 		try (Writer writer = Files.newBufferedWriter(AgendaArquivoDAO.FILE,
 				StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 				PrintWriter pw = new PrintWriter(writer)) {
